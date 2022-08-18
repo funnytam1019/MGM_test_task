@@ -4,7 +4,8 @@ import { sampleData } from './datasource';
 @Component({
   selector: 'app-container',
   template: 
-  `<ejs-treegrid [dataSource]='data' [treeColumnIndex]='1' childMapping='subtasks'>
+  `<ejs-treegrid [dataSource]='data' [treeColumnIndex]='1'
+  childMapping='subtasks'>
   <e-columns>
     <e-column field='taskID' headerText='Task ID' textAlign='Right' width=70></e-column>
     <e-column field='taskName' headerText='Task Name' textAlign='Left' width=200></e-column>
@@ -15,13 +16,11 @@ import { sampleData } from './datasource';
 })
 
 export class AppComponent implements OnInit {
-
-  constructor(
-    public data: Object[]
-  ) {}
-
+  public data: Object[] = [];
+  
   ngOnInit(): void {
     this.data = sampleData;
+    console.log(this.data)
   }
 
 }
