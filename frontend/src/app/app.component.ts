@@ -17,7 +17,6 @@ import { dataSource, virtualData } from './datasource';
 providers: [VirtualScrollService]
 })
 export class AppComponent implements OnInit {
-
     public data!: Object[];
 
     ngOnInit(): void {
