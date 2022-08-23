@@ -1,8 +1,10 @@
 
-import { NgModule,ViewChild } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { ContextMenuModule } from '@syncfusion/ej2-angular-navigations';
 import { TreeGridModule } from '@syncfusion/ej2-angular-treegrid';
 import { AppComponent } from './app.component';
+
 
 /**
  * Module
@@ -10,7 +12,8 @@ import { AppComponent } from './app.component';
 @NgModule({
     imports: [
         BrowserModule,
-        TreeGridModule
+        TreeGridModule,
+        ContextMenuModule
     ],
     declarations: [AppComponent],
     bootstrap: [AppComponent]

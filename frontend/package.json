@@ -18,6 +18,7 @@
     "@angular/platform-browser": "^14.1.0",
     "@angular/platform-browser-dynamic": "^14.1.0",
     "@angular/router": "^14.1.0",
+    "@syncfusion/ej2-angular-navigations": "^20.2.44",
     "@syncfusion/ej2-angular-treegrid": "^20.2.44",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
