@@ -3,6 +3,7 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { VirtualScrollService, TreeGridComponent } from '@syncfusion/ej2-angular-treegrid';
 import { dataSource, virtualData } from './datasource';
 import { Browser } from '@syncfusion/ej2-base';
+import { DataManager, WebApiAdaptor } from '@syncfusion/ej2-data';
 import { ContextMenuComponent, MenuEventArgs, MenuItemModel } from '@syncfusion/ej2-angular-navigations';
 @Component({
     selector: 'app-container',
@@ -12,6 +13,7 @@ import { ContextMenuComponent, MenuEventArgs, MenuItemModel } from '@syncfusion/
 export class AppComponent implements OnInit {
     public data!: Object[];
     public content: string = '';
+    public dataManager!: DataManager;
 
     @ViewChild('contextmenu')
     public contextmenu!: ContextMenuComponent;
@@ -73,6 +75,11 @@ export class AppComponent implements OnInit {
     ngOnInit(): void {
         dataSource();
         this.data = virtualData;
+        // this.dataManager = new DataManager({
+        //   url:
+        //     'backend-server',
+        //   adaptor: new WebApiAdaptor(),
+        //   crossDomain: true
+        // });
     }
-
 }
