@@ -1,85 +1,65 @@
 
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { VirtualScrollService, TreeGridComponent } from '@syncfusion/ej2-angular-treegrid';
-import { dataSource, virtualData } from './datasource';
-import { Browser } from '@syncfusion/ej2-base';
-import { DataManager, WebApiAdaptor } from '@syncfusion/ej2-data';
-import { ContextMenuComponent, MenuEventArgs, MenuItemModel } from '@syncfusion/ej2-angular-navigations';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { TreeGridComponent, VirtualScrollService } from '@syncfusion/ej2-angular-treegrid';
+import { Ajax } from '@syncfusion/ej2-base';
+import { MenuEventArgs } from '@syncfusion/ej2-angular-navigations';
+import { EditSettingsModel } from '@syncfusion/ej2-angular-treegrid';
+import { BeforeOpenCloseEventArgs } from '@syncfusion/ej2-inputs';
+import { getValue, isNullOrUndefined } from '@syncfusion/ej2-base';
 @Component({
-    selector: 'app-container',
-    templateUrl: './app.component.html',
-    providers: [VirtualScrollService]
+  selector: 'app-container',
+  templateUrl: './app.component.html',
+  providers: [VirtualScrollService]
 })
+
 export class AppComponent implements OnInit {
-    public data!: Object[];
-    public content: string = '';
-    public dataManager!: DataManager;
+  public data!: Object[];
+  public content: string = '';
+  public editSettings!: EditSettingsModel;
+  public toolbar!: string[];
+  public contextMenuItems!: Object[];
 
-    @ViewChild('contextmenu')
-    public contextmenu!: ContextMenuComponent;
+  @ViewChild('treegrid')
+  public treeGridObj!: TreeGridComponent;
 
-    // Event triggers while rendering each menu item where “Link” menu item is disabled
-    public addDisabled  (args: MenuEventArgs) {
-        if (args.item.text === 'Link') {
-            args.element.classList.add('e-disabled');
-        }
+
+  ngOnInit(): void {
+    this.editSettings = {
+      allowEditing: true,
+      allowAdding: true,
+      allowDeleting: true,
+      mode: 'Dialog'
+    };
+    this.toolbar = ['Add', 'Edit', 'Delete', 'Update', 'Cancel'];
+    this.contextMenuItems = [
+      { text: 'Collapse the Row', target: '.e-content', id: 'collapserow' },
+      { text: 'Expand the Row', target: '.e-content', id: 'expandrow' }
+    ]
+  }
+  contextMenuClick(args?: MenuEventArgs): void {
+    this.treeGridObj.getColumnByField('taskID');
+    if (args?.item.id === 'collapserow') {
+      this.treeGridObj.collapseRow(<HTMLTableRowElement>(this.treeGridObj.getSelectedRows()[0]));
+    } else {
+      this.treeGridObj.expandRow(<HTMLTableRowElement>(this.treeGridObj.getSelectedRows()[0]));
     }
-
-    // ContextMenu items definition 
-    public menuItems: MenuItemModel[] = [
-        {
-            text: 'Cut',
-            iconCss: 'e-cm-icons e-cut'
-        },
-        {
-            text: 'Copy',
-            iconCss: 'e-cm-icons e-copy'
-        },
-        {
-            text: 'Paste',
-            iconCss: 'e-cm-icons e-paste',
-            items: [
-                {
-                    text: 'Paste Text',
-                    iconCss: 'e-cm-icons e-pastetext'
-                },
-                {
-                    text: 'Paste Special',
-                    iconCss: 'e-cm-icons e-pastespecial'
-                }
-            ]
-        },
-        {
-            separator: true
-        },
-        {
-            text: 'Link',
-            iconCss: 'e-cm-icons e-link'
-        },
-        {
-            text: 'New Comment',
-            iconCss: 'e-cm-icons e-comment'
-        }];
-
-    // Event triggers once the context menu rendering is completed.
-    onCreated(): void {
-        if (Browser.isDevice) {
-            this.content = 'Touch hold to open the ContextMenu';
-            this.contextmenu.animationSettings.effect = 'ZoomIn';
-        } else {
-            this.content = 'Right click / Touch hold to open the ContextMenu';
-            this.contextmenu.animationSettings.effect = 'SlideDown';
-        }
+  }
+  contextMenuOpen(arg?: BeforeOpenCloseEventArgs): void {
+    let elem: Element = arg!.event.target as Element;
+    let uid: any = elem!.closest('.e-row')?.getAttribute('data-uid');
+    if (this.treeGridObj.grid) {
+      arg!.cancel = true;
     }
+  }
 
-    ngOnInit(): void {
-        dataSource();
-        this.data = virtualData;
-        // this.dataManager = new DataManager({
-        //   url:
-        //     'backend-server',
-        //   adaptor: new WebApiAdaptor(),
-        //   crossDomain: true
-        // });
+  click(): any {
+    const ajax = new Ajax(
+      'https://ej2services.syncfusion.com/production/web-services/api/SelfReferenceData',
+      'GET'
+    );
+    ajax.send();
+    ajax.onSuccess = (data: string) => {
+      this.treeGridObj.dataSource = JSON.parse(data);
     }
+  }
 }
