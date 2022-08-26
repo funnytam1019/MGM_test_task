@@ -5,7 +5,8 @@ import { DropDownListAllModule } from '@syncfusion/ej2-angular-dropdowns';
 import { ContextMenuModule } from '@syncfusion/ej2-angular-navigations';
 import { ContextMenuService, EditService, FilterService, ToolbarService, TreeGridModule } from '@syncfusion/ej2-angular-treegrid';
 import { AppComponent } from './app.component';
-
+import { FormsModule } from '@angular/forms';
+import { NumericTextBoxAllModule } from '@syncfusion/ej2-angular-inputs';
 
 /**
  * Module
@@ -16,7 +17,9 @@ import { AppComponent } from './app.component';
     TreeGridModule,
     ContextMenuModule,
     ButtonModule,
-    DropDownListAllModule
+    DropDownListAllModule,
+    FormsModule,
+    NumericTextBoxAllModule
   ],
   providers: [
     FilterService,
