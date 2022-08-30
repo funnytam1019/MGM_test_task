@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { EditSettingsModel, TreeGridComponent, VirtualScrollService } from '@syncfusion/ej2-angular-treegrid';
 import { Ajax } from '@syncfusion/ej2-base';
+import { UserTreeGridConfig } from './config/user-tree-grid.config';
 
 @Component({
   selector: 'app-user-tree-grid',
@@ -26,26 +27,7 @@ export class UserTreeGridComponent implements OnInit {
       allowEditing: true,
       mode: "Dialog"
     }
-    this.contextMenuItems = [
-      { text: 'EditCol', target: '.e-headercontent', id: 'editcol' },
-      { text: 'AddCol', target: '.e-headercontent', id: 'addcol' },
-      { text: 'ViewCol', target: '.e-headercontent', id: 'viewcol' },
-      { text: 'DelCol', target: '.e-headercontent', id: 'delcol' },
-      { separator: true, target: '.e-headercontent', id: 'separator' },
-      { text: 'ChooseCol', target: '.e-headercontent', id: 'choosecol' },
-      { text: 'FreezeCol', target: '.e-headercontent', id: 'freezecol' },
-      { text: 'FilterCol', target: '.e-headercontent', id: 'filtercol' },
-      { text: 'MultiSort', target: '.e-headercontent', id: 'multisort' },
-      { text: 'EditCol', target: '.e-content', id: 'editcol' },
-      { text: 'AddCol', target: '.e-content', id: 'addcol' },
-      { text: 'ViewCol', target: '.e-content', id: 'viewcol' },
-      { text: 'DelCol', target: '.e-content', id: 'delcol' },
-      { separator: true, target: '.e-content', id: 'separator' },
-      { text: 'ChooseCol', target: '.e-content', id: 'choosecol' },
-      { text: 'FreezeCol', target: '.e-content', id: 'freezecol' },
-      { text: 'FilterCol', target: '.e-content', id: 'filtercol' },
-      { text: 'MultiSort', target: '.e-content', id: 'multisort' },
-    ]
+    this.contextMenuItems = new UserTreeGridConfig().contextMenuItems;
   }
 
   click(): void {
