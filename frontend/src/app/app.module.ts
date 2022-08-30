@@ -7,6 +7,7 @@ import { ContextMenuService, EditService, FilterService, ToolbarService, TreeGri
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { NumericTextBoxAllModule } from '@syncfusion/ej2-angular-inputs';
+import { UserTreeGridComponent } from './components/user-tree-grid/user-tree-grid.component';
 
 /**
  * Module
@@ -27,7 +28,7 @@ import { NumericTextBoxAllModule } from '@syncfusion/ej2-angular-inputs';
     ToolbarService,
     ContextMenuService
   ],
-  declarations: [AppComponent],
+  declarations: [AppComponent, UserTreeGridComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
