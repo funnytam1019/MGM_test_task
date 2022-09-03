@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { NumericTextBoxAllModule } from '@syncfusion/ej2-angular-inputs';
 import { UserTreeGridComponent } from './components/user-tree-grid/user-tree-grid.component';
+import { DialogModule } from '@syncfusion/ej2-angular-popups';
+import { EditDialogComponent } from './components/edit-dialog/edit-dialog.component';
 
 /**
  * Module
@@ -20,7 +22,8 @@ import { UserTreeGridComponent } from './components/user-tree-grid/user-tree-gri
     ButtonModule,
     DropDownListAllModule,
     FormsModule,
-    NumericTextBoxAllModule
+    NumericTextBoxAllModule,
+    DialogModule
   ],
   providers: [
     FilterService,
@@ -28,7 +31,7 @@ import { UserTreeGridComponent } from './components/user-tree-grid/user-tree-gri
     ToolbarService,
     ContextMenuService
   ],
-  declarations: [AppComponent, UserTreeGridComponent],
+  declarations: [AppComponent, UserTreeGridComponent, EditDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

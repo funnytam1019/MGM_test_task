@@ -1,0 +1,35 @@
+<div style="height:100%">
+  <ejs-dialog #editDialog height="70%" width="500px" [showCloseIcon]="closeIcon">
+    <ng-template #header>
+      <div class="template">Edit Column</div>
+    </ng-template>
+    <ng-template #content>
+      <div class="dialogContent">
+        <span class="dialogText">You can edit your column here.</span>
+      </div>
+    </ng-template>
+    <ng-template #footerTemplate>
+      <div class="dialog-custom-footer">
+        <div class="footerButton">
+          <button ejs-button style="height: 35px;" cssClass="e-danger"
+            (click)="cancelButtonClick($event)">Cancel</button>
+        </div>
+        <div class="footerButton">
+          <button ejs-button style="height: 35px;" cssClass="e-info"
+            (click)="saveButtonClick($event)">Save</button>
+        </div>
+      </div>
+    </ng-template>
+  </ejs-dialog>
+  <ejs-dialog #confirmDialog height="200px" width="280px" [showCloseIcon]="closeIcon"
+    [visible]="ConfirmDialogVisibility" [buttons]="confirmDialogButtons">
+    <ng-template #header>
+      <div class="template">Confirm Subscription</div>
+    </ng-template>
+    <ng-template #content>
+      <div class="dialogContent">
+        <span class="dialogText">Are you sure you want to subscribe to the newsletter?</span>
+      </div>
+    </ng-template>
+  </ejs-dialog>
+</div>
