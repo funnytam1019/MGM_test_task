@@ -10,6 +10,7 @@ import { NumericTextBoxAllModule } from '@syncfusion/ej2-angular-inputs';
 import { UserTreeGridComponent } from './components/user-tree-grid/user-tree-grid.component';
 import { DialogModule } from '@syncfusion/ej2-angular-popups';
 import { EditDialogComponent } from './components/edit-dialog/edit-dialog.component';
+import { ContainerComponent } from './components/container/container.component';
 
 /**
  * Module
@@ -31,7 +32,7 @@ import { EditDialogComponent } from './components/edit-dialog/edit-dialog.compon
     ToolbarService,
     ContextMenuService
   ],
-  declarations: [AppComponent, UserTreeGridComponent, EditDialogComponent],
+  declarations: [AppComponent, UserTreeGridComponent, EditDialogComponent, ContainerComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

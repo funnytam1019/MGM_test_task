@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { MenuEventArgs } from '@syncfusion/ej2-angular-navigations';
 import { EditSettingsModel, TreeGridComponent, VirtualScrollService } from '@syncfusion/ej2-angular-treegrid';
 import { Ajax } from '@syncfusion/ej2-base';
 import { UserTreeGridConfig } from './config/user-tree-grid.config';
@@ -19,6 +20,9 @@ export class UserTreeGridComponent implements OnInit {
   @ViewChild('treegrid')
   public treeGridObj!: TreeGridComponent;
 
+  @Output()
+  public contextMenuClickEvent = new EventEmitter<string>();
+
   ngOnInit(): void {
     this.toolbar = ['Add', 'Edit', 'Delete', 'Update', 'Cancel'];
     this.editSettings = {
@@ -28,6 +32,10 @@ export class UserTreeGridComponent implements OnInit {
       mode: "Dialog"
     }
     this.contextMenuItems = new UserTreeGridConfig().contextMenuItems;
+  }
+
+  contextMenuClick(args?: MenuEventArgs): void {
+      this.contextMenuClickEvent.emit(args?.item.id);
   }
 
   click(): void {

@@ -1,5 +1,5 @@
 <div style="height:100%">
-  <ejs-dialog #editDialog height="70%" width="500px" [showCloseIcon]="closeIcon">
+  <ejs-dialog #editDialog height="100%" width="500px" [showCloseIcon]="closeIcon">
     <ng-template #header>
       <div class="template">Edit Column</div>
     </ng-template>
@@ -15,8 +15,7 @@
             (click)="cancelButtonClick($event)">Cancel</button>
         </div>
         <div class="footerButton">
-          <button ejs-button style="height: 35px;" cssClass="e-info"
-            (click)="saveButtonClick($event)">Save</button>
+          <button ejs-button style="height: 35px;" cssClass="e-info" (click)="saveButtonClick($event)">Save</button>
         </div>
       </div>
     </ng-template>
