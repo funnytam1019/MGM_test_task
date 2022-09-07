@@ -7,11 +7,8 @@ import { ButtonPropsModel, DialogComponent } from '@syncfusion/ej2-angular-popup
   styleUrls: ['./edit-dialog.component.css']
 })
 
-export class EditDialogComponent implements OnInit {
+export class EditDialogComponent {
   title = 'angular-dialog';
-
-  @Input()
-  public event?: string;
 
   @ViewChild('editDialog')
   public editDialogObject ! : DialogComponent;
@@ -19,16 +16,6 @@ export class EditDialogComponent implements OnInit {
   public confirmDialogObject ! : DialogComponent;
   @ViewChild('dialogTextbox')
   public dialogTextboxObject ! : ElementRef;
-
-  ngOnInit() {
-    this.editDialogObject.hide()
-  }
-
-  public confirmEvent = (): void => {
-    if(this.event === 'editcol') {
-      this.editDialogObject.show();
-    }
-  }
 
   public confirmDialogNoButtonClick = (): void => {
     if(this.dialogTextboxObject.nativeElement.value !== '') {

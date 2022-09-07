@@ -6,11 +6,4 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./container.component.css']
 })
 export class ContainerComponent {
-  public event?: string;
-
-  contextMenuClick(args?: string) {
-    this.event = args;
-    console.log(this.event)
-  }
-
 }
