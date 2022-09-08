@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MenuEventArgs } from '@syncfusion/ej2-angular-navigations';
 import { EditSettingsModel, PageService, TreeGridComponent, VirtualScrollService } from '@syncfusion/ej2-angular-treegrid';
 import { Ajax } from '@syncfusion/ej2-base';
+import { row, RowSelectEventArgs } from '@syncfusion/ej2-grids';
 import { UserTreeGridConfig } from './config/user-tree-grid.config';
 
 @Component({
@@ -15,7 +16,7 @@ export class UserTreeGridComponent implements OnInit {
   public data!: Record<string, unknown>[];
   public editSettings!: EditSettingsModel;
   public contextMenuItems!: Record<string, unknown>[];
-  public rowIndex!: number | undefined;
+  public rowIndex!: string | null;
 
   @ViewChild('treegrid')
   public treeGridObj!: TreeGridComponent;
@@ -26,12 +27,9 @@ export class UserTreeGridComponent implements OnInit {
 
   contextMenu(): void {
     this.editSettings = new UserTreeGridConfig().editSettings;
-    this.contextMenuItems = new UserTreeGridConfig().contextMenuItems; 
+    this.contextMenuItems = new UserTreeGridConfig().contextMenuItems;
   }
-  
-  contextMenuOpen(args: any): void {
-  }
-  
+
   contextMenuClick(args?: MenuEventArgs): void{
     switch (args?.item.id) {
       case 'addnext':
@@ -59,6 +57,11 @@ export class UserTreeGridComponent implements OnInit {
         break;
     }
   }
+
+  rowSelected(args: RowSelectEventArgs): void{
+    this.rowIndex = (args.row as HTMLTableRowElement).getAttribute('aria-rowindex');
+    console.log(this.rowIndex)
+  } 
 
   click(): void {
     const ajax = new Ajax(
