@@ -3,8 +3,12 @@ import { EditSettingsModel } from "@syncfusion/ej2-angular-treegrid";
 export class UserTreeGridConfig {
   public readonly editSettings!: EditSettingsModel;
   public readonly contextMenuItems!: Record<string, unknown>[];
+  public readonly pageSettings!: Record<string, unknown>;
 
   constructor() {
+    this.pageSettings = {
+      pageSize: 10
+    };
     this.editSettings = {
       allowAdding: true,
       allowDeleting: true,

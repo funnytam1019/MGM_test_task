@@ -1,10 +1,7 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { BeforeOpenCloseMenuEventArgs, MenuEventArgs } from '@syncfusion/ej2-angular-navigations';
-import { BeforeOpenEventArgs } from '@syncfusion/ej2-angular-popups';
-import { EditSettingsModel, TreeGridComponent, VirtualScrollService } from '@syncfusion/ej2-angular-treegrid';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MenuEventArgs } from '@syncfusion/ej2-angular-navigations';
+import { EditSettingsModel, PageService, TreeGridComponent, VirtualScrollService } from '@syncfusion/ej2-angular-treegrid';
 import { Ajax } from '@syncfusion/ej2-base';
-import { RowInfo } from '@syncfusion/ej2-grids';
-import { BeforeOpenCloseEventArgs } from '@syncfusion/ej2-inputs';
 import { UserTreeGridConfig } from './config/user-tree-grid.config';
 
 @Component({
@@ -15,10 +12,10 @@ import { UserTreeGridConfig } from './config/user-tree-grid.config';
 })
 
 export class UserTreeGridComponent implements OnInit {
+  public data!: Record<string, unknown>[];
   public editSettings!: EditSettingsModel;
   public contextMenuItems!: Record<string, unknown>[];
   public rowIndex!: number | undefined;
-  public selectionOptions!: Record<string, unknown>;
 
   @ViewChild('treegrid')
   public treeGridObj!: TreeGridComponent;
@@ -32,8 +29,7 @@ export class UserTreeGridComponent implements OnInit {
     this.contextMenuItems = new UserTreeGridConfig().contextMenuItems; 
   }
   
-  contextMenuOpen(args: RowInfo): void {
-    this.rowIndex = args.rowIndex;
+  contextMenuOpen(args: any): void {
   }
   
   contextMenuClick(args?: MenuEventArgs): void{
@@ -57,16 +53,10 @@ export class UserTreeGridComponent implements OnInit {
         this.treeGridObj.deleteRecord();
         break;
 
-      // case 'copyasnext':
-      //   this.editSettings = {
-      //     allowAdding: true,
-      //     newRowPosition: "Below"
-      //   }
-      //   this.treeGridObj.copyHierarchyMode = 'Parent';
-      //   this.treeGridObj.copy();
-      //   console.log(this.treeGridObj.clipboardModule.paste());
-      //   this.treeGridObj.addRecord();
-      //   break;
+      case 'copyasnext':
+        this.treeGridObj.copy();
+        
+        break;
     }
   }
 
@@ -77,7 +67,7 @@ export class UserTreeGridComponent implements OnInit {
     );
     ajax.send();
     ajax.onSuccess = (data: string) => {
-      this.treeGridObj.dataSource = JSON.parse(data);
+      this.data = JSON.parse(data);
     }
   }
 
