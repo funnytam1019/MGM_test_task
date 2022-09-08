@@ -16,7 +16,8 @@ export class UserTreeGridComponent implements OnInit {
   public data!: Record<string, unknown>[];
   public editSettings!: EditSettingsModel;
   public contextMenuItems!: Record<string, unknown>[];
-  public rowIndex!: string | null;
+  public selectedIndex!: number | undefined;
+  public selectedRecord!: Record<string, any>;
 
   @ViewChild('treegrid')
   public treeGridObj!: TreeGridComponent;
@@ -52,16 +53,21 @@ export class UserTreeGridComponent implements OnInit {
         break;
 
       case 'copyasnext':
-        this.treeGridObj.copy();
-        
+        this.selectedIndex = this.treeGridObj['getSelectedRowIndexes']()[0];
+        this.selectedRecord = this.treeGridObj['getSelectedRecords']()[0];
+        this.treeGridObj.addRecord(this.selectedRecord, this.selectedIndex, 'Below');
+        break;
+
+      case 'copyaschild':
+        this.editSettings = {
+          newRowPosition: "Child"
+        }
+        this.selectedIndex = this.treeGridObj['getSelectedRowIndexes']()[0];
+        this.selectedRecord = this.treeGridObj['getSelectedRecords']()[0];
+        this.treeGridObj.addRecord(this.selectedRecord, this.selectedIndex);
         break;
     }
   }
-
-  rowSelected(args: RowSelectEventArgs): void{
-    this.rowIndex = (args.row as HTMLTableRowElement).getAttribute('aria-rowindex');
-    console.log(this.rowIndex)
-  } 
 
   click(): void {
     const ajax = new Ajax(

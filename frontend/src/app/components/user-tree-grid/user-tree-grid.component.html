@@ -7,7 +7,6 @@
   [contextMenuItems]="contextMenuItems"
   [editSettings]="editSettings"
   (contextMenuClick)="contextMenuClick($event)"
-  (rowSelected)="rowSelected($event)"
 > 
   <e-columns>
     <e-column field="TaskID" headerText="Task ID" width="90" textAlign="Right" isPrimaryKey="true">
@@ -16,5 +15,4 @@
     <e-column field="StartDate" headerText="Start Date" width="130" format="yMd" textAlign="Right"></e-column>
     <e-column field="Duration" headerText="Duration" width="80" textAlign="Right"></e-column>
   </e-columns>
-  <
 </ejs-treegrid>
