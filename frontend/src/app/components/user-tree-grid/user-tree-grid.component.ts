@@ -1,7 +1,11 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { MenuEventArgs } from '@syncfusion/ej2-angular-navigations';
+import { BeforeOpenCloseMenuEventArgs, MenuEventArgs } from '@syncfusion/ej2-angular-navigations';
+import { BeforeOpenEventArgs } from '@syncfusion/ej2-angular-popups';
 import { EditSettingsModel, TreeGridComponent, VirtualScrollService } from '@syncfusion/ej2-angular-treegrid';
 import { Ajax } from '@syncfusion/ej2-base';
+import { RowInfo } from '@syncfusion/ej2-grids';
+import { BeforeOpenCloseEventArgs } from '@syncfusion/ej2-inputs';
+import { UserTreeGridConfig } from './config/user-tree-grid.config';
 
 @Component({
   selector: 'app-user-tree-grid',
@@ -11,55 +15,58 @@ import { Ajax } from '@syncfusion/ej2-base';
 })
 
 export class UserTreeGridComponent implements OnInit {
-  public data!: Record<string, unknown>[];
   public editSettings!: EditSettingsModel;
-  public toolbar!: string[];
   public contextMenuItems!: Record<string, unknown>[];
+  public rowIndex!: number | undefined;
+  public selectionOptions!: Record<string, unknown>;
 
   @ViewChild('treegrid')
   public treeGridObj!: TreeGridComponent;
 
-  @Output()
-  public contextMenuClickEvent = new EventEmitter<string>();
-
   ngOnInit(): void {
-    this.toolbar = ['Add', 'Edit', 'Delete', 'Update', 'Cancel'];
-    this.editSettings = {
-      allowAdding: true,
-      allowDeleting: true,
-      allowEditing: true,
-      mode: "Dialog"
-    }
-    this.contextMenuItems = [
-      // { text: 'EditCol', target: '.e-headercontent', id: 'editcol' },
-      // { text: 'AddCol', target: '.e-headercontent', id: 'addcol' },
-      // { text: 'ViewCol', target: '.e-headercontent', id: 'viewcol' },
-      // { text: 'DelCol', target: '.e-headercontent', id: 'delcol' },
-      // { text: 'ChooseCol', target: '.e-headercontent', id: 'choosecol' },
-      // { text: 'FreezeCol', target: '.e-headercontent', id: 'freezecol' },
-      // { text: 'FilterCol', target: '.e-headercontent', id: 'filtercol' },
-      // { text: 'MultiSort', target: '.e-headercontent', id: 'multisort' },
-      // { text: 'AddNext', target: '.e-headercontent', id: 'addnext' },
-      { text: 'AddChild', target: '.e-content', id: 'addchild' },
-      { text: 'EditRow', target: '.e-content', id: 'editrow' },
-      { text: 'SelectRows', target: '.e-content', id: 'selectrows' },
-      { text: 'DelRows', target: '.e-content', id: 'delrows' },
-      { text: 'CopyAsNext', target: '.e-content', id: 'copyasnext' },
-      { text: 'CopyAsChild', target: '.e-content', id: 'copyaschild' },
-      { text: 'MoveAsNext', target: '.e-content', id: 'moveasnext' },
-      { text: 'MoveAsChild', target: '.e-content', id: 'moveaschild' },
-    ]
+    this.contextMenu();
   }
 
-  contextMenuClick(args?: MenuEventArgs): void {
+  contextMenu(): void {
+    this.editSettings = new UserTreeGridConfig().editSettings;
+    this.contextMenuItems = new UserTreeGridConfig().contextMenuItems; 
+  }
+  
+  contextMenuOpen(args: RowInfo): void {
+    this.rowIndex = args.rowIndex;
+  }
+  
+  contextMenuClick(args?: MenuEventArgs): void{
     switch (args?.item.id) {
-      case 'addchild':
+      case 'addnext':
         this.treeGridObj.addRecord();
-    }
-
-    switch (args?.item.id) {
+        break;
+      
+      case 'addchild':
+        this.editSettings = {
+          newRowPosition: "Child"
+        }
+        this.treeGridObj.addRecord();
+        break;
+  
       case 'editrow':
         this.treeGridObj.startEdit();
+        break;
+
+      case 'delrows':
+        this.treeGridObj.deleteRecord();
+        break;
+
+      // case 'copyasnext':
+      //   this.editSettings = {
+      //     allowAdding: true,
+      //     newRowPosition: "Below"
+      //   }
+      //   this.treeGridObj.copyHierarchyMode = 'Parent';
+      //   this.treeGridObj.copy();
+      //   console.log(this.treeGridObj.clipboardModule.paste());
+      //   this.treeGridObj.addRecord();
+      //   break;
     }
   }
 

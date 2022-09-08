@@ -1,7 +1,7 @@
 <button ejs-button (click)="click()">Bind Data</button>
 <ejs-treegrid #treegrid hasChildMapping="isParent" [treeColumnIndex]="1" parentIdMapping="ParentItem" idMapping="TaskID"
-  height="440" [editSettings]="editSettings" [toolbar]="toolbar" [contextMenuItems]="contextMenuItems"
-  [editSettings]="editSettings" (contextMenuClick)="contextMenuClick($event)">
+  height="440" [editSettings]="editSettings" [contextMenuItems]="contextMenuItems"
+  [editSettings]="editSettings" (contextMenuClick)="contextMenuClick($event)" (contextMenuOpen)="contextMenuOpen($event)"> 
   <e-columns>
     <e-column field="TaskID" headerText="Task ID" width="90" textAlign="Right" isPrimaryKey="true">
     </e-column>
