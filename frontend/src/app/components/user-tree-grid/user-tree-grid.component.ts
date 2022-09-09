@@ -1,10 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MenuEventArgs } from '@syncfusion/ej2-angular-navigations';
 import { EditSettingsModel, PageService, TreeGridComponent, VirtualScrollService } from '@syncfusion/ej2-angular-treegrid';
 import { Ajax } from '@syncfusion/ej2-base';
 import { row, RowSelectEventArgs } from '@syncfusion/ej2-grids';
 import { UserTreeGridConfig } from './config/user-tree-grid.config';
-
+import { map } from 'rxjs';
 @Component({
   selector: 'app-user-tree-grid',
   templateUrl: './user-tree-grid.component.html',
@@ -21,6 +22,10 @@ export class UserTreeGridComponent implements OnInit {
 
   @ViewChild('treegrid')
   public treeGridObj!: TreeGridComponent;
+
+  constructor(
+    private readonly http: HttpClient
+  ) {}
 
   ngOnInit(): void {
     this.contextMenu();
@@ -70,14 +75,27 @@ export class UserTreeGridComponent implements OnInit {
   }
 
   click(): void {
-    const ajax = new Ajax(
-      'https://ej2services.syncfusion.com/production/web-services/api/SelfReferenceData',
-      'GET'
-    );
-    ajax.send();
-    ajax.onSuccess = (data: string) => {
-      this.data = JSON.parse(data);
-    }
+    this.http.get('api/record')
+    .pipe(map((res) => {
+      const rows = [];
+      for(const key in res) {
+        // eslint-disable-next-line no-prototype-builtins
+        if(res.hasOwnProperty(key)) {
+        rows.push({...res[key], id:s key})
+        }
+      }
+    }))
+    .subscribe((res) => {
+      console.log(res);
+    })
+    // const ajax = new Ajax(
+    //   'https://ej2services.syncfusion.com/production/web-services/api/SelfReferenceData',
+    //   'GET'
+    // );
+    // ajax.send();
+    // ajax.onSuccess = (data: string) => {
+    //   this.data = JSON.parse(data);
+    // }
   }
 
 }

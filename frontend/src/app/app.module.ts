@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http'
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ButtonModule } from '@syncfusion/ej2-angular-buttons';
@@ -8,7 +9,6 @@ import { DialogModule } from '@syncfusion/ej2-angular-popups';
 import { EditDialogComponent } from './components/edit-dialog/edit-dialog.component';
 import { ContainerComponent } from './components/container/container.component';
 import { UserTreeGridComponent } from './components/user-tree-grid/user-tree-grid.component';
-
 /**
  * Module
  */
@@ -18,7 +18,8 @@ import { UserTreeGridComponent } from './components/user-tree-grid/user-tree-gri
     TreeGridModule,
     ContextMenuModule,
     ButtonModule,
-    DialogModule
+    DialogModule,
+    HttpClientModule
   ],
   providers: [
     FilterService,
